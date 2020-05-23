@@ -1,4 +1,4 @@
-.main-navigation-menu-btn {
+.main-navigation__menu-btn {
   width: 3rem;
   height: 3rem;
   background: transparent;
@@ -10,36 +10,36 @@
   cursor: pointer;
 }
 
-.main-navigation-menu-btn span {
+.main-navigation__menu-btn span {
   display: block;
   width: 3rem;
   height: 2.5px;
   background: white;
 }
 
-.main-navigation-title {
+.main-navigation__title {
   color: white;
 }
 
-.main-navigation-title a {
+.main-navigation__title a {
   text-decoration: none;
   color: white;
 }
 
-.main-navigation-header-nav {
+.main-navigation__header-nav {
   display: none;
 }
 
-.main-navigation-drawer-nav {
+.main-navigation__drawer-nav {
   height: 100%;
 }
 
 @media (min-width: 768px) {
-  .main-navigation-menu-btn {
+  .main-navigation__menu-btn {
     display: none;
   }
 
-  .main-navigation-header-nav {
+  .main-navigation__header-nav {
     display: block;
   }
 }
