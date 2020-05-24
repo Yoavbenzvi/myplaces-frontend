@@ -1,4 +1,5 @@
 import React, { useRef, useEffect} from 'react';
+import './GoogleMaps.css';
 
 const GoogleMaps = (props) => {
 	const mapRef = useRef();
@@ -21,7 +22,6 @@ const GoogleMaps = (props) => {
 			className={`map ${props.className}`} 
 			style={props.style}
 		>
-		heyyy
 		</div>
 	) 
 }
