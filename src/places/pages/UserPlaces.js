@@ -19,7 +19,7 @@ const MOCK_PLACES = [
 	},
 	{
 		id: "p2",
-		title: "Empire State Building",
+		title: "Test Empire State Building 2",
 		description: "One of the most famous sky scrapers in the world!",
 		imageUrl:
 			"https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg",
