@@ -7,9 +7,6 @@ import {
 } from "react-router-dom";
 
 import Users from "./user/pages/Users";
-//added
-import Authenticate from "./user/pages/Authenticate";
-//added
 import NewPlace from "./places/pages/NewPlace";
 import UserPlaces from "./places/pages/UserPlaces";
 import UpdatePlace from "./places/pages/UpdatePlace";
@@ -27,11 +24,6 @@ const App = () => {
 					<Route path="/:userId/places" exact>
 						<UserPlaces />
 					</Route>
-				{/*added*/}
-					<Route path="/auth" exact>
-						<Authenticate />
-					</Route>
-				{/*added*/}
 					<Route path="/places/new" exact>
 						<NewPlace />
 					</Route>
