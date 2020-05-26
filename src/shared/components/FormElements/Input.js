@@ -33,6 +33,7 @@ const Input = (props) => {
 	
 	useEffect(() => {
 		props.onInput(id, value, isValid)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id, value, isValid, onInput])
 
 	const changeHandler = (event) => {
