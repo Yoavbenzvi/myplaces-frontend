@@ -1,4 +1,4 @@
-imort { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 export const useHttpClient = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -23,15 +23,21 @@ export const useHttpClient = () => {
 	   	//move down?
 	   	const responseData = await response.json();
 
+	   	activeHttpRequests.current = activeHttpRequests.current.filter(reqCtrl => {
+	   		return reqCtrl !== httpAbortControll
+	   	})
+
 			if(!response.ok) {
 				throw new Error(responseData.message)
 			}
 
+			setIsLoading(false);
 			return responseData;
    	} catch(err) {
-   		setError(err.message)
+   		setError(err.message);
+   		setIsLoading(false);
+   		throw err;
    	}
-   	setIsLoading(false);
    }, []);
 
    const clearError = () => {
@@ -44,5 +50,5 @@ export const useHttpClient = () => {
    	}
    }, []);
 
-   return { isLoading, error, sendRequest, clearError}
+   return { isLoading, error, sendRequest, clearError }
 }
