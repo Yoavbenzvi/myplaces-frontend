@@ -62,7 +62,9 @@ const Auth = () => {
 				{
 					'Content-Type': 'application/json'
 				}
-			).then(() => auth.login());
+			).then(response => {
+				auth.login(response.user.id)
+			});
 			// try {
 			// 	await sendRequest('http://localhost:5000/api/users/login', 'POST', JSON.stringify({
 			// 			email: formState.inputs.email.value,
@@ -106,7 +108,9 @@ const Auth = () => {
 				{
 					'Content-Type': 'application/json'
 				}
-			).then(() => auth.login())
+			).then(response => {
+				auth.login(response.user.id)
+			});
 		}
 	}
 

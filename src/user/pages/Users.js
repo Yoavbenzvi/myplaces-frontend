@@ -10,6 +10,7 @@ const Users = () => {
 
    const [loadedUsers, setLoadedUsers] = useState(null);
 
+   //CHange to .then block
    useEffect(() => {
       const fetchUsers = async () => {
          try {
