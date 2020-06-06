@@ -3,12 +3,12 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../s
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input'; 
 import Button from '../../shared/components/FormElements/Button'; 
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
-
 import './Auth.css';
 
 const Auth = () => {
@@ -122,7 +122,7 @@ const Auth = () => {
 			<h2>Login Required</h2>
 			<hr />
 				<form onSubmit={authSubmitHandler}>
-					{! isLoginMode && <Input
+					{!isLoginMode && <Input
 						id='name'
 						element='input'
 						type='text'
@@ -131,6 +131,7 @@ const Auth = () => {
 						errorText='Please enter a name'
 						onInput={inputHandler}
 					/>}
+					{!isLoginMode && <ImageUpload center id='image' />}
 					<Input
 						id='email'
 						element='input'
