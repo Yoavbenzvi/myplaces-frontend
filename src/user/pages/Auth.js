@@ -12,11 +12,8 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import './Auth.css';
 
 const Auth = () => {
-
 	const auth = useContext(AuthContext);
-
 	const [isLoginMode, setIsLoginMode] = useState(true);
-
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 	const [formState, inputHandler, setFormData] = useForm({
@@ -32,15 +29,22 @@ const Auth = () => {
 
 	const switchModeHandler = () => {
 		if(!isLoginMode) {
-			setFormData({
+			setFormData(
+			{
 				...formState.inputs,
-				name: undefined
-			}, formState.inputs.email.isValid && formState.inputs.password.isValid)
+				name: undefined,
+				image: undefined
+			}, 
+			formState.inputs.email.isValid && formState.inputs.password.isValid)
 		} else {
 			setFormData({
 				...formState.inputs,
 				name: {
 					value: '',
+					isValid: false
+				},
+				image: {
+					value: null,
 					isValid: false
 				}
 			}, false)
@@ -49,70 +53,45 @@ const Auth = () => {
 		setIsLoginMode(prevMode => !prevMode)
 	}
 
-	const authSubmitHandler = async (event) => {
+	const authSubmitHandler = async event => {
 		event.preventDefault();
 
-		if(isLoginMode) {
-			sendRequest('http://localhost:5000/api/users/login', 
-				'POST', 
+		console.log(formState.inputs);
+
+		if (isLoginMode) {
+			try {
+				const responseData = await sendRequest(
+				'http://localhost:5000/api/users/login',
+				'POST',
 				JSON.stringify({
-					email: formState.inputs.email.value,
-					password: formState.inputs.password.value
-				}), 
-				{
-					'Content-Type': 'application/json'
-				}
-			).then(response => {
-				auth.login(response.user.id)
-			});
-			// try {
-			// 	await sendRequest('http://localhost:5000/api/users/login', 'POST', JSON.stringify({
-			// 			email: formState.inputs.email.value,
-			// 			password: formState.inputs.password.value
-			// 		}), {
-			// 			'Content-Type': 'application/json'
-			// 		}
-			// 	);
-
-			// 	auth.login();
-			// } catch(err) {
-
-			// }
-		} else {
-			// try {
-
-				// await sendRequest('http://localhost:5000/api/users/signup', 
-				// 	'POST', 
-				// 	JSON.stringify({
-				// 		name: formState.inputs.name.value,
-				// 		email: formState.inputs.email.value,
-				// 		password: formState.inputs.password.value
-				// 	}),
-				// 	{
-				// 		'Content-Type': 'application/json'
-				// 	}
-				// )
-
-				// auth.login();			
-			// } catch(err) {
-
-			// }
-
-			sendRequest('http://localhost:5000/api/users/signup', 
-				'POST', 
-				JSON.stringify({
-					name: formState.inputs.name.value,
-					email: formState.inputs.email.value,
-					password: formState.inputs.password.value
+				email: formState.inputs.email.value,
+				password: formState.inputs.password.value
 				}),
 				{
 					'Content-Type': 'application/json'
 				}
-			).then(response => {
-				auth.login(response.user.id)
-			});
+				);
+				auth.login(responseData.user.id);
+			} catch (err) {}
+		} else {
+		try {
+			const responseData = await sendRequest(
+				'http://localhost:5000/api/users/signup',
+				'POST',
+				JSON.stringify({
+				name: formState.inputs.name.value,
+				email: formState.inputs.email.value,
+				password: formState.inputs.password.value
+				}),
+				{
+				'Content-Type': 'application/json'
+				}
+			);
+
+			auth.login(responseData.user.id);
+		} catch (err) {}
 		}
-	}
+	};
 
 	return(
 		<React.Fragment>
@@ -131,7 +110,7 @@ const Auth = () => {
 						errorText='Please enter a name'
 						onInput={inputHandler}
 					/>}
-					{!isLoginMode && <ImageUpload center id='image' />}
+					{!isLoginMode && <ImageUpload center id='image' onInput={inputHandler} />}
 					<Input
 						id='email'
 						element='input'
