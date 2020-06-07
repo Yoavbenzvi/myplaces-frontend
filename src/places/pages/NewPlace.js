@@ -28,6 +28,10 @@ const NewPlace = () => {
 		address:{
 			value: '',
 			isValid: false
+		},
+		image: {
+			value: null,
+			isValid: false
 		}
 	}, false);
 
@@ -35,18 +39,16 @@ const NewPlace = () => {
 
 	const placeSubmitHandler = (event) => {
 		event.preventDefault();
-		//writing this block without a try catch - there's nothing to catch
+
+		const formData = new FormData();
+		formData.append('title', formState.inputs.title.value)
+		formData.append('description', formState.inputs.description.value)
+		formData.append('address', formState.inputs.address.value)
+		formData.append('creator', auth.userId)
+		formData.append('image', formState.inputs.image.value)
 		sendRequest('http://localhost:5000/api/places',
 			'POST',
-			JSON.stringify({
-				title: formState.inputs.title.value,
-				description: formState.inputs.description.value,
-				address: formState.inputs.address.value,
-				creator: auth.userId
-			}),
-			{
-				'Content-Type': 'application/json'
-			}
+			formData
 		).then(() => history.push('/'))
 	}
 
@@ -80,7 +82,11 @@ const NewPlace = () => {
 					errorText='Please enter a valid address'
 					onInput={inputHandler}
 				/>
-				<ImageUpload />
+				<ImageUpload 
+					id='image' 
+					onInput={inputHandler} 
+					errorText='Please provide an image' 
+				/>
 				<Button type='submit' disabled={!formState.isValid}>ADD PLACE</Button>
 			</form>
 		</React.Fragment>
