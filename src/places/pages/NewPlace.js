@@ -48,7 +48,8 @@ const NewPlace = () => {
 		formData.append('image', formState.inputs.image.value)
 		sendRequest('http://localhost:5000/api/places',
 			'POST',
-			formData
+			formData,
+			{ Authorization: 'Bearer ' + auth.token }
 		).then(() => history.push('/'))
 	}
 
